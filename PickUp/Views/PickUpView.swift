@@ -9,30 +9,39 @@ import SwiftUI
 
 struct PickUpView: View {
     var body: some View {
-        TabView {
-            NavigationStack {
-                EventsPageView()
+        ZStack {
+            TabView {
+                NavigationStack {
+                    EventsPageView()
+                        .toolbarBackground(Color.gray.opacity(0.01), for: .tabBar)
+                        .toolbarBackgroundVisibility(.visible, for: .tabBar)
+                }
+                .tabItem {
+                    Label("Events", systemImage: "house")                    .environment(\.symbolVariants, .none)
+                }
+                .tag(0)
+                NavigationStack {
+                    EventCreationView()
+                        .toolbarBackground(Color.gray.opacity(0.01), for: .tabBar)
+                        .toolbarBackgroundVisibility(.visible, for: .tabBar)
+                }
+                .tabItem{
+                    Label("Create Event", systemImage: "plus.app")                    .environment(\.symbolVariants, .none)
+                }
+                .tag(1)
+                NavigationStack {
+                    ProfileView()
+                        .toolbarBackground(Color.gray.opacity(0.01), for: .tabBar)
+                        .toolbarBackgroundVisibility(.visible, for: .tabBar)
+                }
+                .tabItem {
+                    Label("Profile", systemImage: "person")
+                        .environment(\.symbolVariants, .none)
+                }
+                .tag(2)
             }
-            .tabItem {
-                Image(systemName: "house.fill")
-                Text("Event Page")
-            }
-            NavigationStack {
-                EventCreationView()
-            }
-            .tabItem{
-                Image(systemName: "plus.app.fill")
-                Text("Create Event")
-            }
-            NavigationStack {
-                ProfileView()
-            }
-            .tabItem {
-                Image(systemName: "person.fill")
-                Text("Profile")
-            }
+            .tint(Color("PrimaryPink"))
         }
-        .background()
     }
 }
 

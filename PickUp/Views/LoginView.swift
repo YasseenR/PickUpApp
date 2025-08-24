@@ -8,27 +8,32 @@
 import SwiftUI
 
 struct LoginView: View {
+    @State var navigate = false
     var body: some View {
-        NavigationStack {
-            HeroLoginView()
+        if !navigate {
+            HeroLoginView(navigate: $navigate)
+        } else {
+            PickUpView()
         }
     }
 }
 
+
+
 struct HeroLoginView: View {
+    @Binding var navigate: Bool
     var body: some View{
-        VStack {
-            Button(action:  {
-                
-            }) {
-                Text("Login")
-                    .padding()
-                    .foregroundColor(.white)
-                    .background(Color.blue)
-                    .cornerRadius(10)
+            Button("Login"){
+                navigate = true
             }
+                .padding()
+                .font(.system(size: 18, weight: .medium))
+                .foregroundColor(Color("TextPrimary"))
+                .background(Color("PrimaryPink"))
+                .cornerRadius(10)
+
+            // Invisible NavigationLink controlled by state
         }
-    }
 }
 
 
