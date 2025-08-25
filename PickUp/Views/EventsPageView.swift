@@ -49,7 +49,7 @@ struct EventCard: View {
         
         
         VStack {
-            ZStack {
+            ZStack(alignment: .topLeading) {
                 Rectangle()
                     .fill(Color.gray.opacity(0.2))
                     .frame(height: 160)
@@ -58,6 +58,20 @@ struct EventCard: View {
                             .font(.system(size: 40))
                             .foregroundColor(.gray)
                     )
+                
+                HStack(spacing: 4) {
+                    Text(eventModel.isOfficial ? "Official" : "Unofficial")
+                        .font(.caption)
+                        .fontWeight(.medium)
+                }
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(
+                    Capsule()
+                        .fill(eventModel.isOfficial ? .accentTeal : .accentOrange)
+                )
+                .foregroundColor(.white)
+                .padding(12)
             }
             VStack(alignment: .leading, spacing: 4) {
                 
