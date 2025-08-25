@@ -10,8 +10,8 @@ import SwiftUI
 struct EventsPageView: View {
     
     @State private var events = [
-        EventModel(host: "Yasseen Rouni", title: "Pick Up Volleyball", date: "Friday May 30 3:30 PM - 5:30 PM", location: "Pearson Hall 3rd Floor Gym",sport: "Volleyball", skillLevel: .beginner, maxAttendees: 18, currentAttendees: 10, isOfficial: true, description: "Beginner Friendly Volleyball. Come and learn how to play with others in your same shoes!", imageName: nil),
-        EventModel(host: "Tharani Kannan", title: "All Levels Basketball", date: "Saturday May 30 3:30 PN - 5:30 PM", location: "Pearson Hall 3rd Floor Gym", sport: "Basketball", skillLevel: .allLevels, maxAttendees: 15, currentAttendees: 13, isOfficial: true, description: "Pick up basketball open to all levels. Come test your skills", imageName: nil)
+        EventModel(host: "Yasseen Rouni", title: "Pick Up Volleyball", date: "Friday May 30 3:30 PM - 5:30 PM", location: "PH 3rd Floor Gym",sport: "Volleyball", skillLevel: .beginner, maxAttendees: 18, currentAttendees: 10, isOfficial: true, description: "Beginner Friendly Volleyball. Come and learn how to play with others in your same shoes!", imageName: nil),
+        EventModel(host: "Tharani Kannan", title: "All Levels Basketball", date: "Saturday May 30 3:30 PN - 5:30 PM", location: "PH 3rd Floor Gym", sport: "Basketball", skillLevel: .allLevels, maxAttendees: 15, currentAttendees: 13, isOfficial: true, description: "Pick up basketball open to all levels. Come test your skills", imageName: nil)
     ]
     var body: some View {
         VStack {
@@ -47,39 +47,45 @@ struct EventCard: View {
     
     var body: some View {
         
-        ZStack {
-            Rectangle()
-                .fill(Color("Background"))
-                .cornerRadius(20)
-            VStack {
-                HStack{
+        
+        VStack {
+            ZStack {
+                Rectangle()
+                    .fill(Color.gray.opacity(0.2))
+                    .frame(height: 160)
+                    .overlay(
+                        Image(systemName: "sportscourt.fill")
+                            .font(.system(size: 40))
+                            .foregroundColor(.gray)
+                    )
+            }
+            VStack(alignment: .leading, spacing: 4) {
+                
+                HStack {
                     Text("\(eventModel.host)")
+                    Spacer()
+                    Text("\(eventModel.sport)")
                 }
-                .frame(width: 350, alignment: .topLeading)
-                Text("\(eventModel.title)")
-                    .frame(width: 350, alignment: .topLeading)
-                VStack {
-                    
-                    Image("gym")
-                        .resizable()
-                        .frame(width: 200, height: 100)
-                    HStack {
-                        Text("\(eventModel.date)")
-                    }
-                    .frame(width: 350, alignment: .topLeading)
-                    HStack {
-                        Text("\(eventModel.location)")
-                    }
-                    .frame(width: 350, alignment: .topLeading)
-                    HStack {
-                        Text("\(eventModel.attendeeStatus)")
-                    }
-                    .frame(width: 350, alignment: .topLeading)
+                
+                HStack {
+                    Text("\(eventModel.title)")
+                    Spacer()
+                    Text("\(eventModel.location)")
+                }
+                Text("\(eventModel.date)")
+                HStack {
+                    Text("\(eventModel.skillLevel.rawValue)")
+                    Spacer()
+                    Text("\(eventModel.attendeeStatus)")
                 }
             }
         }
         .frame(width: 350, alignment: .topLeading)
         .padding(4)
+        .background(
+            RoundedRectangle(cornerRadius: 15)
+                .fill(Color(.accentBlue)))
+        
     }
 }
 
