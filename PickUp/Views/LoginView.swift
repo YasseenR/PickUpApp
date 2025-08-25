@@ -25,6 +25,7 @@ struct HeroLoginView: View {
     var body: some View{
             Button("Login"){
                 navigate = true
+                print(Date.init())
             }
                 .padding()
                 .font(.system(size: 18, weight: .medium))
