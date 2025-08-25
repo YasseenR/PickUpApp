@@ -17,9 +17,9 @@ struct EventsPageView: View {
     var body: some View {
         VStack {
             VStack(spacing: 20) {
-                Text("Temple University")
-                
                 Text("Events")
+                    .font(.headline)
+                Text("Temple University")
             }
             .frame(height: 50)
             .padding()
@@ -81,11 +81,23 @@ struct EventCard: View {
                 //Text("\(eventModel.host)")
                 Text("\(eventModel.sport)")
                     .font(.caption)
-                Text("\(eventModel.date)")
-                    .font(.subheadline)
-                Text("\(eventModel.location)")
-                    .font(.subheadline)
+                    .foregroundColor(.accentYellow)
                 HStack {
+                    Image(systemName: "calendar")
+                        .font(.subheadline)
+                    Text("\(eventModel.date)")
+                        .font(.subheadline)
+                }
+                
+                HStack {
+                    Image(systemName: "location.fill")
+                        .font(.subheadline)
+                    Text("\(eventModel.location)")
+                        .font(.subheadline)
+                }
+                HStack {
+                    Image(systemName: "person.fill")
+                        .font(.caption)
                     Text("\(eventModel.host)")
                         .font(.caption)
                     Spacer()
@@ -106,9 +118,10 @@ struct EventCard: View {
         }
         .frame(width: 350, alignment: .topLeading)
         .padding(4)
+        .foregroundColor(Color("Divider"))
         .background(
             RoundedRectangle(cornerRadius: 15)
-                .fill(eventModel.isOfficial ? Color(.accentBlue) : Color((.accentBlue)))
+                .fill(eventModel.isOfficial ? Color(.accentBlue) : Color(.accentBlue))
         )
         
     }
