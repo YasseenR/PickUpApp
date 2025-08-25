@@ -11,7 +11,9 @@ struct EventModel: Identifiable {
     let id = UUID()
     let host: String
     let title: String
-    let date: String
+    let date: Date
+    let startTime: Date
+    let endTime: Date
     let location: String
     let sport: String
     let skillLevel: SkillLevel
@@ -45,6 +47,22 @@ struct EventModel: Identifiable {
         maxAttendees - currentAttendees
     }
     
+    var formattedDate: String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        return formatter.string(from: date)
+    }
+    
+    var formattedTime: String {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        return "\(formatter.string(from: startTime)) - \(formatter.string(from: endTime))"
+    }
+    
+    var formattedDateTime: String {
+        "\(formattedDate) • \(formattedTime)"
+    }
+    
     var attendeeStatus: String {
         if isFull {
             return "Full"
@@ -54,9 +72,4 @@ struct EventModel: Identifiable {
             return "\(currentAttendees)/\(maxAttendees) going"
         }
     }
-    
-    
 }
-
-
-
