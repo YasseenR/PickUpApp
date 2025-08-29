@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct EventsPageView: View {
+    @State private var showEvent = false
     
     @State private var events = [
         EventModel(host: "Campus Rec", title: "Pick Up Volleyball", date: "Friday May 30 3:30 PM - 5:30 PM", location: "PH 3rd Floor Gym",sport: "Volleyball", skillLevel: .beginner, maxAttendees: 18, currentAttendees: 10, isOfficial: true, description: "Beginner Friendly Volleyball. Come and learn how to play with others in your same shoes!", imageName: nil),
@@ -27,10 +28,13 @@ struct EventsPageView: View {
             ScrollView {
                 VStack(spacing: 20) {
                     ForEach($events) { $event in
-                        EventCard(eventModel: $event)
+                        EventCard(eventModel: $event, showEvent: $showEvent)
                     }
                 }
             }
+        }
+        .sheet(isPresented: $showEvent) {
+            EventDetailsView(eventModel: $events[0], showEvent: $showEvent)
         }
     }
 }
@@ -45,11 +49,12 @@ struct LocationCard: View {
 
 struct EventCard: View {
     @Binding var eventModel: EventModel
+    @Binding var showEvent: Bool
     
     var body: some View {
         
         
-        Button(action: {print("hello")}) { VStack {
+        Button(action: {showEvent = true}) { VStack {
             ZStack(alignment: .topLeading) {
                 Rectangle()
                     .fill(Color.black.opacity(0.2))
@@ -105,9 +110,9 @@ struct EventCard: View {
                     Spacer()
                     Image(systemName: "person.2.fill")
                         .font(.caption)
-                        .foregroundColor(eventModel.isFull ? .warning : .warning)
+                        .foregroundColor(eventModel.isFull ? .warning : .green)
                     Text("\(eventModel.attendeeStatus)")
-                        .foregroundColor(eventModel.isFull ? .errorRed : .warning)
+                        .foregroundColor(eventModel.isFull ? .warning : .green)
                         .font(.caption)
                 }
                 
@@ -127,6 +132,50 @@ struct EventCard: View {
                 .fill(eventModel.isOfficial ? Color(.accentBlue) : Color(.accentBlue))
         )
             
+        }
+    }
+}
+
+struct EventDetailsView: View {
+    @Binding var eventModel: EventModel
+    @Binding var showEvent: Bool
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            VStack(alignment: .leading) {
+                Text("Game Details")
+                HStack {
+                    Image(systemName: "calendar")
+                    Text("\(eventModel.date)")
+                    Spacer()
+                }
+                HStack {
+                    Image(systemName: "location")
+                    Text("\(eventModel.location)")
+                }
+            }
+            Spacer()
+            
+            VStack {
+                Text("Players")
+            }
+            Spacer()
+            
+            HStack {
+                Spacer()
+                Button(action: {showEvent = false}){
+                    VStack {
+                        Text("Reserve a spot")
+                    }
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 15)
+                            .fill(.green)
+                    )
+                    .foregroundColor(.white)
+                }
+                Spacer()
+            }
         }
     }
 }
