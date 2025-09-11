@@ -27,17 +27,18 @@ struct EventCard: View {
                     .padding(4)
                 
                 HStack(spacing: 4) {
-                    Image(systemName: eventModel.isOfficial ? "checkmark.seal.fill" : "person.2.fill")
+                    Image(systemName: "person.2.fill")
                         .font(.caption)
-                    Text(eventModel.isOfficial ? "Official" : "Unofficial")
+                        .foregroundColor(eventModel.isFull ? .white : .white)
+                    Text("\(eventModel.attendeeStatus)")
+                        .foregroundColor(eventModel.isFull ? .white : .white)
                         .font(.caption)
-                        .fontWeight(.medium)
                 }
                 .padding(.horizontal, 8)
                 .padding(.vertical, 4)
                 .background(
                     Capsule()
-                        .fill(eventModel.isOfficial ? .accentTeal : .accentOrange)
+                        .fill(eventModel.isFull ? .accentOrange : .cherryRed)
                 )
                 .foregroundColor(.white)
                 .padding(12)
@@ -68,12 +69,6 @@ struct EventCard: View {
                     Text("\(eventModel.host)")
                         .font(.caption)
                     Spacer()
-                    Image(systemName: "person.2.fill")
-                        .font(.caption)
-                        .foregroundColor(eventModel.isFull ? .warning : .green)
-                    Text("\(eventModel.attendeeStatus)")
-                        .foregroundColor(eventModel.isFull ? .warning : .green)
-                        .font(.caption)
                 }
                 
                 /*Spacer()
@@ -89,7 +84,7 @@ struct EventCard: View {
         .foregroundColor(Color("Divider"))
         .background(
             RoundedRectangle(cornerRadius: 15)
-                .fill(eventModel.isOfficial ? Color.gray.opacity(0.2) : Color(.cherryRed))
+                .fill(eventModel.isOfficial ? Color(.cherryRed) : Color(.cherryRed))
         )
             
         }
