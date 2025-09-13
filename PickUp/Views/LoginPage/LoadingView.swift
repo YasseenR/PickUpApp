@@ -14,8 +14,8 @@ struct LoadingView: View {
         VStack {
             if isLoading {
                 ProgressView("Loading...")
-                    .progressViewStyle(CircularProgressViewStyle(tint: .accentTeal))
-                    .foregroundStyle(.accentTeal)
+                    .progressViewStyle(CircularProgressViewStyle(tint: .cherryRed))
+                    .foregroundStyle(.cherryRed)
             } else {
                 Text("Done!")
             }

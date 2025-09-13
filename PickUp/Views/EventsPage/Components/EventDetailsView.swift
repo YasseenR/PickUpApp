@@ -29,14 +29,15 @@ struct EventDetailsView: View {
                         .foregroundColor(.gray)
                 )
         }
-        VStack(alignment: .leading) {
-            HStack {
-                Image(systemName: "person.2.fill")
-                    .font(.caption)
-                Text(eventModel.attendeeStatus)
-                    .font(.caption)
-                    .fontWeight(.medium)
-            }
+        ScrollView {
+            VStack(alignment: .leading) {
+                HStack {
+                    Image(systemName: "person.2.fill")
+                        .font(.caption)
+                    Text(eventModel.attendeeStatus)
+                        .font(.caption)
+                        .fontWeight(.medium)
+                }
                 .padding(.horizontal, 8)
                 .padding(.vertical, 4)
                 .background(
@@ -44,80 +45,79 @@ struct EventDetailsView: View {
                         .fill(eventModel.isFull ? .accentOrange : .cherryRed)
                 )
                 .foregroundColor(.white)
-            Text(eventModel.title)
+                Text(eventModel.title)
                 //.font(.headline)
-                .font(.system(size: 32))
-            VStack(spacing: 10) {
-                
-                HStack {
-                    //Image(systemName: "calendar")
-                    Text("\(eventModel.date)")
-                        .font(.subheadline)
-                    Spacer()
+                    .font(.system(size: 32))
+                VStack(spacing: 10) {
+                    
+                    HStack {
+                        //Image(systemName: "calendar")
+                        Text("\(eventModel.date)")
+                            .font(.subheadline)
+                        Spacer()
+                    }
+                    HStack {
+                        //Image(systemName: "location")
+                        Text("\(eventModel.location)")
+                            .font(.subheadline)
+                        Spacer()
+                    }
                 }
-                HStack {
-                    //Image(systemName: "location")
-                    Text("\(eventModel.location)")
-                        .font(.subheadline)
-                    Spacer()
-                }
-            }
-            Divider()
-            VStack(alignment:.leading) {
-                Text("Host")
-                    .font(.system(size: 20))
-                    .bold()
-                HStack {
-                    Circle()
-                        .fill(Color.gray.opacity(0.2))
-                        .frame(width: 20, height: 20)
-                        .overlay(
-                            Image(systemName: "person.fill")
-                                .font(.system(size: 10))
-                                .foregroundColor(.gray)
-                        )
-                    Text("\(eventModel.host)")
-                }
-                
-            }
-            Divider()
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Event Details")
-                    //.font(.headline)
-                    .font(.system(size: 20))
-                    .bold()
-                HStack(spacing: 0) {
-                    Text("Activity: ")
+                Divider()
+                VStack(alignment:.leading) {
+                    Text("Host")
+                        .font(.system(size: 20))
                         .bold()
-                    Text("\(eventModel.sport)")
-                }
-                HStack(spacing: 0) {
-                    Text("Event Type: ")
-                        .bold()
-                    Text("Public")
-                }
-            }
-            .font(.system(size: 12))
-            Divider()
-            Text("Players")
-            HStack {
-                ForEach(players) {player in
-                    VStack {
+                    HStack {
                         Circle()
                             .fill(Color.gray.opacity(0.2))
-                            .frame(width: 30, height: 30)
+                            .frame(width: 20, height: 20)
                             .overlay(
                                 Image(systemName: "person.fill")
-                                    .font(.system(size: 15))
+                                    .font(.system(size: 10))
                                     .foregroundColor(.gray)
                             )
+                        Text("\(eventModel.host)")
+                    }
+                }
+                Divider()
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Event Details")
+                    //.font(.headline)
+                        .font(.system(size: 20))
+                        .bold()
+                    HStack(spacing: 0) {
+                        Text("Activity: ")
+                            .bold()
+                        Text("\(eventModel.sport)")
+                    }
+                    HStack(spacing: 0) {
+                        Text("Event Type: ")
+                            .bold()
+                        Text("Public")
+                    }
+                }
+                .font(.system(size: 12))
+                Divider()
+                Text("Players")
+                HStack {
+                    ForEach(players) {player in
+                        VStack {
+                            Circle()
+                                .fill(Color.gray.opacity(0.2))
+                                .frame(width: 30, height: 30)
+                                .overlay(
+                                    Image(systemName: "person.fill")
+                                        .font(.system(size: 15))
+                                        .foregroundColor(.gray)
+                                )
+                        }
                     }
                 }
             }
+            .padding(.horizontal, 15)
+            Spacer()
         }
-        .padding(.horizontal, 15)
-        Spacer()
-        
         HStack {
             Spacer()
             Button(action: {showEvent = false}){
@@ -133,7 +133,6 @@ struct EventDetailsView: View {
             }
             Spacer()
         }
-    
     }
 }
 
