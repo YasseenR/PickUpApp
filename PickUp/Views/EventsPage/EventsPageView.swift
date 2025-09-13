@@ -24,6 +24,7 @@ struct EventsPageView: View {
                 Text("Temple University")
             }
             .frame(height: 50)
+            .foregroundStyle(.textPrimary)
             .padding()
             
             ScrollView {

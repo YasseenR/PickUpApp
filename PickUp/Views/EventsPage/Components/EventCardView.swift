@@ -16,9 +16,9 @@ struct EventCard: View {
         
         Button(action: {showEvent = true}) { VStack {
             ZStack(alignment: .topLeading) {
-                Rectangle()
+                RoundedRectangle(cornerRadius: 6)
                     .fill(Color.black.opacity(0.2))
-                    .frame(height: 160)
+                    .frame(height: 120)
                     .overlay(
                         Image(systemName: "sportscourt.fill")
                             .font(.system(size: 40))
@@ -47,22 +47,23 @@ struct EventCard: View {
                 Text("\(eventModel.title)")
                     .font(.headline)
                 //Text("\(eventModel.host)")
-                Text("\(eventModel.sport)")
+                Text("\(eventModel.skillLevel.rawValue) \(eventModel.sport)")
                     .font(.caption)
-                    .foregroundColor(.accentYellow)
+                    .foregroundColor(.cherryRed)
+                Divider()
                 HStack {
-                    Image(systemName: "calendar")
-                        .font(.subheadline)
+                    Image(systemName: "clock")
+                        .font(.caption)
                     Text("\(eventModel.date)")
-                        .font(.subheadline)
+                        .font(.caption)
                 }
-                
                 HStack {
                     Image(systemName: "location.fill")
-                        .font(.subheadline)
+                        .font(.caption)
                     Text("\(eventModel.location)")
-                        .font(.subheadline)
+                        .font(.caption)
                 }
+                Divider()
                 HStack {
                     Image(systemName: "person.fill")
                         .font(.caption)
@@ -81,12 +82,19 @@ struct EventCard: View {
         }
         .frame(width: 350, alignment: .topLeading)
         .padding(4)
-        .foregroundColor(Color("Divider"))
+        .foregroundColor(Color(.textPrimary))
         .background(
             RoundedRectangle(cornerRadius: 15)
-                .fill(eventModel.isOfficial ? Color(.cherryRed) : Color(.cherryRed))
+                .stroke(Color(.border.opacity(0.2)), lineWidth: 3)
         )
             
         }
     }
+}
+
+
+#Preview {
+    @State var model = EventModel(host: "John Doe", title: "Pick Up Volleyball", date: "3:30 PM - 5:30 PM", location: "Pearson Hall 3rd Floor Gym",sport: "Volleyball", skillLevel: .beginner, maxAttendees: 18, currentAttendees: 10, isOfficial: true, description: "Beginner Friendly Volleyball. Come and learn how to play with others in your same shoes!", imageName: nil)
+    @State var show = false
+    EventCard(eventModel: $model, showEvent: $show)
 }

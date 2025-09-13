@@ -12,9 +12,13 @@ struct PickUpView: View {
         ZStack {
             TabView {
                 NavigationStack {
+                    ZStack {
+                        Color(.background)
+                            .ignoresSafeArea()
                     EventsPageView()
                         .toolbarBackground(Color.gray.opacity(0.01), for: .tabBar)
                         .toolbarBackgroundVisibility(.visible, for: .tabBar)
+                }
                 }
                 .tabItem {
                     Label("Events", systemImage: "house")                    .environment(\.symbolVariants, .none)
@@ -40,7 +44,7 @@ struct PickUpView: View {
                 }
                 .tag(2)
             }
-            .tint(Color("PrimaryPink"))
+            .tint(Color(.cherryRed))
         }
     }
 }

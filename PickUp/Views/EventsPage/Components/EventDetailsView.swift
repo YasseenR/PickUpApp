@@ -31,25 +31,24 @@ struct EventDetailsView: View {
         }
         VStack(alignment: .leading) {
             HStack {
-                Image(systemName: eventModel.isOfficial ? "checkmark.seal.fill" : "person.2.fill")
+                Image(systemName: "person.2.fill")
                     .font(.caption)
-                Text(eventModel.isOfficial ? "Official" : "Unofficial")
+                Text(eventModel.attendeeStatus)
                     .font(.caption)
                     .fontWeight(.medium)
             }
-                .font(.caption)
-                .fontWeight(.medium)
                 .padding(.horizontal, 8)
                 .padding(.vertical, 4)
                 .background(
                     RoundedRectangle(cornerRadius: 5)
-                        .fill(eventModel.isOfficial ? .accentTeal : .accentOrange)
+                        .fill(eventModel.isFull ? .accentOrange : .cherryRed)
                 )
                 .foregroundColor(.white)
             Text(eventModel.title)
                 //.font(.headline)
-                .font(.system(size: 40))
+                .font(.system(size: 32))
             VStack(spacing: 10) {
+                
                 HStack {
                     //Image(systemName: "calendar")
                     Text("\(eventModel.date)")
@@ -63,21 +62,43 @@ struct EventDetailsView: View {
                     Spacer()
                 }
             }
-            Button(action: {}) {
-                Image(systemName: "calendar.badge.plus")
-                    .padding(10)
-                    .background(
-                        RoundedRectangle(cornerRadius: 15)
-                        .fill(.blue)
-                    )
-                    .foregroundColor(.white)
+            Divider()
+            VStack(alignment:.leading) {
+                Text("Host")
+                    .font(.system(size: 20))
+                    .bold()
+                HStack {
+                    Circle()
+                        .fill(Color.gray.opacity(0.2))
+                        .frame(width: 20, height: 20)
+                        .overlay(
+                            Image(systemName: "person.fill")
+                                .font(.system(size: 10))
+                                .foregroundColor(.gray)
+                        )
+                    Text("\(eventModel.host)")
+                }
                 
             }
-        }
-        .padding(.horizontal, 20)
-        Spacer()
-        
-        VStack(alignment: .leading) {
+            Divider()
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Event Details")
+                    //.font(.headline)
+                    .font(.system(size: 20))
+                    .bold()
+                HStack(spacing: 0) {
+                    Text("Activity: ")
+                        .bold()
+                    Text("\(eventModel.sport)")
+                }
+                HStack(spacing: 0) {
+                    Text("Event Type: ")
+                        .bold()
+                    Text("Public")
+                }
+            }
+            .font(.system(size: 12))
+            Divider()
             Text("Players")
             HStack {
                 ForEach(players) {player in
@@ -94,6 +115,7 @@ struct EventDetailsView: View {
                 }
             }
         }
+        .padding(.horizontal, 15)
         Spacer()
         
         HStack {
@@ -104,8 +126,8 @@ struct EventDetailsView: View {
                 }
                 .padding()
                 .background(
-                    RoundedRectangle(cornerRadius: 15)
-                        .fill(.accentTeal)
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(.cherryRed)
                 )
                 .foregroundColor(.white)
             }
@@ -116,7 +138,7 @@ struct EventDetailsView: View {
 }
 
 #Preview {
-    @State var event = EventModel(host: "Tharani Kannan", title: "All Levels Basketball", date: "Saturday May 30 3:30 PM - 5:30 PM", location: "PH 3rd Floor Gym", sport: "Basketball", skillLevel: .allLevels, maxAttendees: 15, currentAttendees: 15, isOfficial: false, description: "Pick up basketball open to all levels. Come test your skills", imageName: nil)
+    @State var event = EventModel(host: "Tharani Kannan", title: "All Levels Basketball", date: "Saturday May 30 3:30 PM - 5:30 PM", location: "Pearson Hall 3rd Floor Gym", sport: "Basketball", skillLevel: .allLevels, maxAttendees: 15, currentAttendees: 15, isOfficial: false, description: "Pick up basketball open to all levels. Come test your skills", imageName: nil)
     @State var bruh = false
     EventDetailsView(eventModel: $event, showEvent: $bruh)
 }
