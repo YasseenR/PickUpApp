@@ -86,9 +86,10 @@ struct EventCard: View {
         .background(
             RoundedRectangle(cornerRadius: 15)
                 .stroke(Color(.border.opacity(0.2)), lineWidth: 3)
-        )
-            
+                .fill(Color(.cardBackground)))
+        
         }
+        .padding(4)
     }
 }
 
