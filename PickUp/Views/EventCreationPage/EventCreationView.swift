@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
 
 struct EventCreationView: View {
     var body: some View {
@@ -38,7 +39,11 @@ struct HeroActionView: View {
             .padding(.horizontal, 25)
             Spacer()
             
-            Button(action: {} ) {
+            Button(action: {
+                // Add a new document with a generated ID
+                addNewDocument()
+
+            } ) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(Color.cherryRed)
@@ -53,6 +58,15 @@ struct HeroActionView: View {
             }
             
             
+        }
+    }
+    func addNewDocument() {
+        FirestoreManager.shared.db.collection("users").addDocument(data: ["name": "Yasseen", "createdAt": Timestamp(date: Date())]) { error in
+            if let error = error {
+                print("Error adding document: \(error)")
+            } else {
+                print("Document added successfully!")
+            }
         }
     }
 }
