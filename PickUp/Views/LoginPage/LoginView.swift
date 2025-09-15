@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import FirebaseAnalytics
+
 
 struct LoginView: View {
     @State var navigate = false
@@ -32,6 +34,7 @@ struct HeroLoginView: View {
                 .foregroundColor(Color("TextPrimary"))
                 .background(Color("PrimaryPink"))
                 .cornerRadius(10)
+                .analyticsScreen(name: "\(HeroLoginView.self)")
 
             // Invisible NavigationLink controlled by state
         }
