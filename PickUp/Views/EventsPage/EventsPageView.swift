@@ -9,6 +9,7 @@ import SwiftUI
 
 struct EventsPageView: View {
     @State private var showEvent = false
+    @State private var searchText = ""
     
     @State private var events = [
         EventModel(host: "Campus Rec", title: "Pick Up Volleyball", date: "Friday May 30 3:30 PM - 5:30 PM", location: "PH 3rd Floor Gym",sport: "Volleyball", skillLevel: .beginner, maxAttendees: 18, currentAttendees: 10, isOfficial: true, description: "Beginner Friendly Volleyball. Come and learn how to play with others in your same shoes!", imageName: nil),
@@ -22,6 +23,7 @@ struct EventsPageView: View {
                 Text("Events")
                     .font(.headline)
                 Text("Temple University")
+                SearchBar(text: $searchText)
             }
             .frame(height: 50)
             .foregroundStyle(.textPrimary)
@@ -40,6 +42,44 @@ struct EventsPageView: View {
         }
     }
 }
+
+struct SearchBar: View {
+    @Binding var text: String
+    @FocusState private var isFocused: Bool
+    
+    var body: some View {
+        HStack {
+            Image(systemName: "magnifyingglass")
+                .foregroundColor(.gray)
+            
+            TextField("Search...", text: $text)
+                .foregroundColor(.white)
+                .focused($isFocused)
+                .disableAutocorrection(true)
+                .autocapitalization(.none)
+            
+            if !text.isEmpty {
+                Button(action: {
+                    text = ""
+                    isFocused = false
+                }) {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundColor(.gray)
+                }
+            }
+        }
+        .padding(10)
+        .background(Color(.cardBackground)) // card-style dark background
+        .cornerRadius(12)
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Color(.cherryRed), lineWidth: isFocused ? 2 : 0) // teal accent border when focused
+        )
+        .padding(.horizontal)
+        .shadow(color: Color.black.opacity(0.6), radius: 4, x: 0, y: 2)
+    }
+}
+
 
 struct LocationCard: View {
     var body: some View {

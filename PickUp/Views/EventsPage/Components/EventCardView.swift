@@ -31,7 +31,7 @@ struct EventCard: View {
                         .font(.caption)
                         .foregroundColor(eventModel.isFull ? .white : .white)
                     Text("\(eventModel.attendeeStatus)")
-                        .foregroundColor(eventModel.isFull ? .white : .white)
+                        .foregroundColor(.white)
                         .font(.caption)
                 }
                 .padding(.horizontal, 8)
@@ -51,24 +51,33 @@ struct EventCard: View {
                     .font(.caption)
                     .foregroundColor(.cherryRed)
                 Divider()
+                    .overlay(Color.divider)
                 HStack {
                     Image(systemName: "clock")
                         .font(.caption)
+                        .foregroundStyle(.textPrimary)
+                        .foregroundStyle(.textPrimary)
                     Text("\(eventModel.date)")
                         .font(.caption)
+                        .foregroundStyle(.textPrimary)
                 }
                 HStack {
                     Image(systemName: "location.fill")
                         .font(.caption)
+                        .foregroundStyle(.textPrimary)
                     Text("\(eventModel.location)")
                         .font(.caption)
+                        .foregroundStyle(.textPrimary)
                 }
                 Divider()
+                    .overlay(Color.divider)
                 HStack {
                     Image(systemName: "person.fill")
                         .font(.caption)
+                        .foregroundStyle(.textPrimary)
                     Text("\(eventModel.host)")
                         .font(.caption)
+                        .foregroundStyle(.textPrimary)
                     Spacer()
                 }
                 

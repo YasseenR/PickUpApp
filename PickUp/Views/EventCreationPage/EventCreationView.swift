@@ -8,15 +8,30 @@
 import SwiftUI
 import FirebaseFirestore
 
+enum EventCreationState {
+    case welcome
+    case details
+    case customization
+}
+
 struct EventCreationView: View {
+    @State private var currentState: EventCreationState = .welcome
     var body: some View {
         NavigationView {
-            HeroActionView()
+            switch currentState {
+            case .welcome:
+                WelcomeView(currentState: $currentState)
+            case .details:
+                CustomizationView()
+            case .customization:
+                WelcomeView(currentState: $currentState)
+            }
         }
     }
 }
 
-struct HeroActionView: View {
+struct WelcomeView: View {
+    @Binding var currentState: EventCreationState
     var body: some View {
         VStack(spacing: 40) {
             Spacer()
@@ -41,7 +56,7 @@ struct HeroActionView: View {
             
             Button(action: {
                 // Add a new document with a generated ID
-                addNewDocument()
+                currentState = .customization
 
             } ) {
                 ZStack {
@@ -53,7 +68,7 @@ struct HeroActionView: View {
                                 .foregroundStyle(.white)
                                 .bold()
                         )
-                        .padding(.horizontal, 30)
+                        .padding(30)
                 }
             }
             
@@ -94,6 +109,14 @@ struct BenefitRow: View {
             }
             
             Spacer()
+        }
+    }
+}
+
+struct CustomizationView: View {
+    var body: some View {
+        VStack {
+            Text("Customization View")
         }
     }
 }
