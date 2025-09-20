@@ -18,13 +18,16 @@ struct EventCreationView: View {
     @State private var currentState: EventCreationState = .welcome
     var body: some View {
         NavigationView {
-            switch currentState {
-            case .welcome:
-                WelcomeView(currentState: $currentState)
-            case .details:
-                CustomizationView()
-            case .customization:
-                WelcomeView(currentState: $currentState)
+            
+            Group {
+                switch currentState {
+                case .welcome:
+                    WelcomeView(currentState: $currentState)
+                case .details:
+                    CustomizationView()
+                case .customization:
+                    WelcomeView(currentState: $currentState)
+                }
             }
         }
     }
@@ -82,6 +85,14 @@ struct WelcomeView: View {
             } else {
                 print("Document added successfully!")
             }
+        }
+    }
+}
+
+struct DetailsView: View {
+    var body: some View {
+        VStack {
+            
         }
     }
 }
