@@ -15,27 +15,25 @@ enum EventCreationState {
 }
 
 struct EventCreationView: View {
-    @State private var currentState: EventCreationState = .welcome
+    @State private var currentState: EventCreationState = .details
+    @State private var eventData = EventCreationModel()
     var body: some View {
         NavigationView {
             
             Group {
                 switch currentState {
                 case .welcome:
-                    WelcomeView(currentState: $currentState)
+                    welcomeView
                 case .details:
-                    CustomizationView()
+                    detailsView
                 case .customization:
-                    WelcomeView(currentState: $currentState)
+                    welcomeView
                 }
             }
         }
     }
-}
-
-struct WelcomeView: View {
-    @Binding var currentState: EventCreationState
-    var body: some View {
+    
+    private var welcomeView: some View {
         VStack(spacing: 40) {
             Spacer()
             Image(systemName: "plus.circle.fill")
@@ -78,22 +76,57 @@ struct WelcomeView: View {
             
         }
     }
-    func addNewDocument() {
-        FirestoreManager.shared.db.collection("users").addDocument(data: ["name": "Yasseen", "createdAt": Timestamp(date: Date())]) { error in
-            if let error = error {
-                print("Error adding document: \(error)")
-            } else {
-                print("Document added successfully!")
+    
+    private var detailsView: some View {
+        VStack {
+            Text("Event Creation Page")
+            ScrollView {
+                VStack {
+                    Text("Choose your sport")
+                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
+                        ForEach(Sport.allCases, id: \.self) { sport in
+                            SportCard(sport: sport, isSelected: eventData.sport == sport, action: {eventData.sport = sport})
+                        }
+                    }
+                    .padding()
+                }
             }
+
         }
     }
 }
 
-struct DetailsView: View {
+
+
+func action() {
+    
+}
+
+struct SportCard: View {
+    let sport: Sport
+    let isSelected: Bool
+    let action: () -> Void
     var body: some View {
-        VStack {
+        Button(action: action) {
+            VStack(spacing: 8) {
+                Image(systemName: sport.icon)
+                    .font(.title2)
+                    .foregroundStyle(isSelected ? .white : .cherryRed)
+                Text("\(sport.displayName)")
+                    .font(.caption)
+                    .fontWeight(.medium)
+                    .foregroundStyle(isSelected ? .white : .cherryRed)
+            }
+            .foregroundStyle(Color(.white))
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 16)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(isSelected ? .cherryRed : Color(.systemGray6))
+            )
             
         }
+        .buttonStyle(PlainButtonStyle())
     }
 }
 
@@ -128,6 +161,40 @@ struct CustomizationView: View {
     var body: some View {
         VStack {
             Text("Customization View")
+        }
+    }
+}
+
+enum Sport: String, CaseIterable {
+    case basketball = "Basketball"
+    case volleyball = "Volleyball"
+    case badminton = "Badminton"
+    case pickleball = "Pickleball"
+    case tennis = "Tennis"
+    case soccer = "Soccer"
+    
+    var displayName: String {
+        return self.rawValue
+    }
+    
+    var icon: String {
+        switch self {
+        case .basketball: return "figure.basketball"
+        case .volleyball: return "figure.volleyball"
+        case .badminton: return "figure.badminton"
+        case .pickleball: return "figure.pickleball"
+        case .tennis: return "figure.tennis"
+        case .soccer: return "figure.indoor.soccer"
+        }
+    }
+}
+
+func addNewDocument() {
+    FirestoreManager.shared.db.collection("users").addDocument(data: ["name": "Yasseen", "createdAt": Timestamp(date: Date())]) { error in
+        if let error = error {
+            print("Error adding document: \(error)")
+        } else {
+            print("Document added successfully!")
         }
     }
 }
