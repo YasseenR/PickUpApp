@@ -17,6 +17,8 @@ enum EventCreationState {
 struct EventCreationView: View {
     @State private var currentState: EventCreationState = .welcome
     @State private var eventData = EventCreationModel()
+    @State private var showingImagePicker = false
+    @State private var selectedImage: UIImage?
     var body: some View {
         NavigationView {
             
@@ -30,6 +32,9 @@ struct EventCreationView: View {
                     customizationView
                 }
             }
+        }
+        .sheet(isPresented: $showingImagePicker) {
+            ImagePicker(selectedImage: $selectedImage)
         }
     }
     
@@ -183,8 +188,60 @@ struct EventCreationView: View {
     }
     
     var customizationView: some View {
-        VStack {
-            Text("Customization View")
+        ScrollView {
+            VStack(spacing: 24) {
+                Text("Event Title")
+                    .font(.headline)
+                
+                TextField("Give your event a catchy name", text: $eventData.title)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+            }
+            
+            VStack(spacing: 12) {
+                Text("Description")
+                    .font(.headline)
+                
+                TextField("Tell players what to expect...", text: $eventData.description, axis: .vertical)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .lineLimit(3...6)
+            }
+            
+            VStack(spacing: 12) {
+                Text("Event Image")
+                    .font(.headline)
+                
+                Button(action: {showingImagePicker = true} ) {
+                    VStack(spacing: 12) {
+                        if let selectedImage = selectedImage {
+                            Image(uiImage: selectedImage)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(height:120)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                        } else {
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color(.systemGray6))
+                                .frame(height: 120)
+                                .overlay(
+                                    VStack(spacing: 8) {
+                                        Image(systemName: "photo")
+                                            .font(.title2)
+                                            .foregroundColor(.secondary)
+                    
+                                        Text("Add Event Photo")
+                                            .font(.subheadline)
+                                            .foregroundColor(.secondary)
+                                    }
+                                )
+                        }
+                    }
+                }
+                .buttonStyle(PlainButtonStyle())
+            }
+            
+            
+            
+            
         }
     }
 }
@@ -340,6 +397,43 @@ func addNewDocument() {
             print("Error adding document: \(error)")
         } else {
             print("Document added successfully!")
+        }
+    }
+}
+
+struct ImagePicker: UIViewControllerRepresentable {
+    @Binding var selectedImage: UIImage?
+    @Environment(\.presentationMode) var presentationMode
+    
+    func makeUIViewController(context: Context) -> UIImagePickerController {
+        let picker = UIImagePickerController()
+        picker.delegate = context.coordinator
+        picker.sourceType = .photoLibrary
+        return picker
+    }
+    
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+        let parent: ImagePicker
+        
+        init(_ parent: ImagePicker) {
+            self.parent = parent
+        }
+        
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            if let image = info[.originalImage] as? UIImage {
+                parent.selectedImage = image
+            }
+            parent.presentationMode.wrappedValue.dismiss()
+        }
+        
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            parent.presentationMode.wrappedValue.dismiss()
         }
     }
 }
