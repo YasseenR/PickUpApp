@@ -5,7 +5,7 @@ An iOS app built with SwiftUI and Firebase that helps players find, join, and ho
 ✨ Features
 
 
-🔐 Apple Sign-In authentication
+🔐 University SSO authentication
 
 📍 Location-based game discovery (only see nearby events)
 
