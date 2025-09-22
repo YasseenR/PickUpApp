@@ -26,11 +26,20 @@ An iOS app built with SwiftUI and Firebase that helps players find, join, and ho
 
 
 Frontend: Swift, SwiftUI, Combine
+
 Backend: Firebase
+
 Authentication (Apple Sign-In)
+
 Firestore (game data, chat, ratings)
+
 Cloud Storage (event images, user assets)
+
 Cloud Functions (notifications, verification logic)
+
 Firebase Cloud Messaging (push notifications)
+
 Location: CoreLocation + GeoFirestore
+
 Architecture: MVVM + service layer abstraction
+
