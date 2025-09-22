@@ -105,9 +105,9 @@ struct EventDetailsView: View {
                         VStack {
                             Circle()
                                 .fill(Color.gray.opacity(0.2))
-                                .frame(width: 30, height: 30)
+                                .frame(width: 32, height: 32)
                                 .overlay(
-                                    Image(systemName: "person.fill")
+                                    Image(systemName: "person.fill.checkmark")
                                         .font(.system(size: 15))
                                         .foregroundColor(.gray)
                                 )

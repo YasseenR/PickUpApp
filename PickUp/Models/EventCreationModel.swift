@@ -11,7 +11,7 @@ struct EventCreationModel {
     var title: String = ""
     var description: String = ""
     var sport: Sport = .basketball
-    var skillLevel: EventModel.SkillLevel = .allLevels
+    var skillLevel: SkillLevel = .allLevels
     var eventDate: Date = Date()
     var startTime: Date = Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: Date()) ?? Date()
     var endTime: Date = Calendar.current.date(bySettingHour: 20, minute: 0, second: 0, of: Date()) ?? Date()
