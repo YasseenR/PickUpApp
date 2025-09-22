@@ -30,7 +30,7 @@ Frontend: Swift, SwiftUI, Combine
 
 Backend: Firebase
 
-Authentication (Apple Sign-In)
+Authentication (OAuth Universirty SSO)
 
 Firestore (game data, chat, ratings)
 
