@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseFirestore
 
+
 enum EventCreationState {
     case welcome
     case details
@@ -41,11 +42,11 @@ struct EventCreationView: View {
     private var welcomeView: some View {
         VStack(spacing: 40) {
             Spacer()
-            Image(systemName: "plus.circle.fill")
+            Image(systemName: "person.3.fill")
                 .font(.system(size: 60))
                 .foregroundColor(.cherryRed)
             VStack {
-                Text("Create Your Event")
+                Text("Host a Game")
                     .font(.system(size: 30))
                     .bold()
                 Text("Host your match, invite players, and play your way.")
@@ -70,7 +71,7 @@ struct EventCreationView: View {
                         .fill(Color.cherryRed)
                         .frame(height: 60)
                         .overlay(
-                            Text("Start Creating Event")
+                            Text("Start Creating Game")
                                 .foregroundStyle(.white)
                                 .bold()
                         )
@@ -142,7 +143,7 @@ struct EventCreationView: View {
                     HStack {
                         Text("\(eventData.maxAttendees) players")
                             .font(.headline)
-                            .foregroundColor(.blue)
+                            .foregroundColor(.cherryRed)
                             .padding(8)
                         
                         Spacer()
@@ -160,6 +161,7 @@ struct EventCreationView: View {
                     
                     Button(action: {
                             withAnimation {
+                                print(eventData)
                                 currentState = .customization
                             }
                         }) {
@@ -167,6 +169,7 @@ struct EventCreationView: View {
                                 Text("Continue")
                                     .font(.headline)
                                     .fontWeight(.semibold)
+                                
                                 
                                 Image(systemName: "arrow.right")
                                     .font(.headline)
@@ -176,7 +179,7 @@ struct EventCreationView: View {
                             .padding(.vertical, 16)
                             .background(
                                 RoundedRectangle(cornerRadius: 12)
-                                    .fill(Color.blue)
+                                    .fill(Color.cherryRed)
                             )
                             .padding(.horizontal)
                         }
@@ -239,7 +242,26 @@ struct EventCreationView: View {
                 .buttonStyle(PlainButtonStyle())
             }
             
-            
+            Button(action: {
+                // Add a new document with a generated ID
+                
+                createEvent(eventData: eventData)
+                currentState = .welcome
+                
+
+            } ) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(Color.cherryRed)
+                        .frame(height: 60)
+                        .overlay(
+                            Text("Create Game")
+                                .foregroundStyle(.white)
+                                .bold()
+                        )
+                        .padding(30)
+                }
+            }
             
             
         }
@@ -338,7 +360,7 @@ struct BenefitRow: View {
 
 
 
-enum Sport: String, CaseIterable {
+enum Sport: String, CaseIterable, Codable {
     case basketball = "Basketball"
     case volleyball = "Volleyball"
     case badminton = "Badminton"
@@ -362,7 +384,7 @@ enum Sport: String, CaseIterable {
     }
 }
 
-enum SkillLevel: String, CaseIterable {
+enum SkillLevel: String, CaseIterable, Codable {
     case allLevels = "All Levels"
     case beginner = "Beginner"
     case intermediate = "Intermediate"
@@ -398,6 +420,21 @@ func addNewDocument() {
         } else {
             print("Document added successfully!")
         }
+    }
+}
+
+func createEvent(eventData: EventCreationModel) {
+    
+    do {
+        try FirestoreManager.shared.db.collection("users").addDocument(from: eventData) { error in
+            if let error = error {
+                print("Error adding document: \(error)")
+            } else {
+                print("Document added successfully!")
+            }
+        }
+    } catch let error {
+        print("Error writing to document")
     }
 }
 

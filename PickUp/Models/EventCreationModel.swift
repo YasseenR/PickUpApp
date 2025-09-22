@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct EventCreationModel {
+struct EventCreationModel: Codable {
     var title: String = ""
     var description: String = ""
     var sport: Sport = .basketball
