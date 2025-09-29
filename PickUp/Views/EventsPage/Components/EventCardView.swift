@@ -13,7 +13,6 @@ struct EventCard: View {
     
     var body: some View {
         
-        
         Button(action: {showEvent = true}) { VStack {
             ZStack(alignment: .topLeading) {
                 RoundedRectangle(cornerRadius: 6)
@@ -29,8 +28,8 @@ struct EventCard: View {
                 HStack(spacing: 4) {
                     Image(systemName: "person.2.fill")
                         .font(.caption)
-                        .foregroundColor(eventModel.isFull ? .white : .white)
-                    Text("\(eventModel.attendeeStatus)")
+                        .foregroundColor(.white)
+                    Text("\(eventModel.currentAttendees)")
                         .foregroundColor(.white)
                         .font(.caption)
                 }
@@ -38,7 +37,7 @@ struct EventCard: View {
                 .padding(.vertical, 4)
                 .background(
                     Capsule()
-                        .fill(eventModel.isFull ? .accentOrange : .cherryRed)
+                        .fill(.cherryRed)
                 )
                 .foregroundColor(.white)
                 .padding(12)
@@ -47,7 +46,7 @@ struct EventCard: View {
                 Text("\(eventModel.title)")
                     .font(.headline)
                 //Text("\(eventModel.host)")
-                Text("\(eventModel.skillLevel.rawValue) \(eventModel.sport)")
+                Text("\(eventModel.skillLevel) \(eventModel.sport)")
                     .font(.caption)
                     .foregroundColor(.cherryRed)
                 Divider()
@@ -102,9 +101,3 @@ struct EventCard: View {
     }
 }
 
-
-#Preview {
-    @State var model = EventModel(host: "John Doe", title: "Pick Up Volleyball", date: "3:30 PM - 5:30 PM", location: "Pearson Hall 3rd Floor Gym",sport: "Volleyball", skillLevel: .beginner, maxAttendees: 18, currentAttendees: 10, isOfficial: true, description: "Beginner Friendly Volleyball. Come and learn how to play with others in your same shoes!", imageName: nil)
-    @State var show = false
-    EventCard(eventModel: $model, showEvent: $show)
-}

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct EventsPageView: View {
+    @StateObject private var viewModel = EventsPageVM()
     @State private var showEvent = false
     @State private var searchText = ""
     
@@ -30,7 +31,7 @@ struct EventsPageView: View {
             
             ScrollView {
                 VStack(spacing: 20) {
-                    ForEach($events) { $event in
+                    ForEach($viewModel.events) { $event in
                         EventCard(eventModel: $event, showEvent: $showEvent)
                     }
                 }

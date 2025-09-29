@@ -6,9 +6,26 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
-struct EventModel: Identifiable {
-    let id = UUID()
+
+struct FirebaseEventModel: Identifiable, Codable {
+    @DocumentID var id: String?
+    var title: String
+    var description: String
+    var host: String
+    var sport: String
+    var location: String
+    var date: Date
+    var skillLevel: String
+    var maxAttendees: Int
+    var currentAttendees: Int
+    var isOfficial: Bool
+}
+
+
+struct EventModel: Identifiable, Codable {
+    @DocumentID var id: String?
     let host: String
     let title: String
     let date: String
@@ -21,7 +38,7 @@ struct EventModel: Identifiable {
     let description: String
     let imageName: String?
     
-    enum SkillLevel: String, CaseIterable {
+    enum SkillLevel: String, CaseIterable, Codable {
         case beginner = "Beginner"
         case intermediate = "Intermediate"
         case advanced = "Advanced"
@@ -58,5 +75,27 @@ struct EventModel: Identifiable {
     
 }
 
-
+extension EventModel {
+    init(from firebaseModel: FirebaseEventModel) {
+        self.id = firebaseModel.id
+        self.host = firebaseModel.host
+        self.title = firebaseModel.title
+        self.date = EventModel.formatDate(firebaseModel.date) // convert Date → String
+        self.location = firebaseModel.location
+        self.sport = firebaseModel.sport
+        self.skillLevel = SkillLevel(rawValue: firebaseModel.skillLevel) ?? .allLevels
+        self.maxAttendees = firebaseModel.maxAttendees
+        self.currentAttendees = firebaseModel.currentAttendees
+        self.isOfficial = firebaseModel.isOfficial
+        self.description = firebaseModel.description
+        self.imageName = nil // or generate a default if you want
+    }
+    
+    private static func formatDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+        return formatter.string(from: date)
+    }
+}
 
