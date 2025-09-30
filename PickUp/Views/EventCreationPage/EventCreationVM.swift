@@ -19,10 +19,15 @@ class EventCreationVM: ObservableObject {
         }
     }
 
-    func createEvent(eventData: EventCreationModel) {
+    func createEvent(eventData: EventCreationModel, host: String) {
+        
+        print(eventData.eventDate)
+        print(eventData.startTime)
+        print(eventData.endTime)
+        let firebaseEvent = FirebaseEventModel(from: eventData, host: host, isOfficial: false)
         
         do {
-            try FirestoreManager.shared.db.collection("games").addDocument(from: eventData) { error in
+            try FirestoreManager.shared.db.collection("games").addDocument(from: firebaseEvent) { error in
                 if let error = error {
                     print("Error adding document: \(error)")
                 } else {

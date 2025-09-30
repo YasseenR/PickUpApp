@@ -246,7 +246,7 @@ struct EventCreationView: View {
             Button(action: {
                 // Add a new document with a generated ID
                 
-                viewModel.createEvent(eventData: eventData)
+                viewModel.createEvent(eventData: eventData, host: "Yasseen Rouni")
                 currentState = .welcome
                 
 
