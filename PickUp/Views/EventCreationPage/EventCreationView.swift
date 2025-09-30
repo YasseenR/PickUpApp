@@ -16,6 +16,7 @@ enum EventCreationState {
 }
 
 struct EventCreationView: View {
+    @StateObject private var viewModel = EventCreationVM()
     @State private var currentState: EventCreationState = .welcome
     @State private var eventData = EventCreationModel()
     @State private var showingImagePicker = false
@@ -245,7 +246,7 @@ struct EventCreationView: View {
             Button(action: {
                 // Add a new document with a generated ID
                 
-                createEvent(eventData: eventData)
+                viewModel.createEvent(eventData: eventData)
                 currentState = .welcome
                 
 
@@ -358,85 +359,6 @@ struct BenefitRow: View {
     }
 }
 
-
-
-enum Sport: String, CaseIterable, Codable {
-    case basketball = "Basketball"
-    case volleyball = "Volleyball"
-    case badminton = "Badminton"
-    case pickleball = "Pickleball"
-    case tennis = "Tennis"
-    case soccer = "Soccer"
-    
-    var displayName: String {
-        return self.rawValue
-    }
-    
-    var icon: String {
-        switch self {
-        case .basketball: return "figure.basketball"
-        case .volleyball: return "figure.volleyball"
-        case .badminton: return "figure.badminton"
-        case .pickleball: return "figure.pickleball"
-        case .tennis: return "figure.tennis"
-        case .soccer: return "figure.indoor.soccer"
-        }
-    }
-}
-
-enum SkillLevel: String, CaseIterable, Codable {
-    case allLevels = "All Levels"
-    case beginner = "Beginner"
-    case intermediate = "Intermediate"
-    case advanced = "Advanced"
-    
-    var displayName: String {
-        return self.rawValue
-    }
-    
-    var icon: String {
-        switch self {
-        case .allLevels: return "person.3.fill"
-        case .beginner: return "medal.fill"
-        case .intermediate: return "medal.fill"
-        case .advanced: return "medal.fill"
-        }
-    }
-    
-    var iconColor: Color {
-        switch self {
-        case .allLevels: return .silver
-        case .beginner: return .bronze
-        case .intermediate: return .gold
-        case .advanced: return .success
-        }
-    }
-}
-
-func addNewDocument() {
-    FirestoreManager.shared.db.collection("users").addDocument(data: ["name": "Yasseen", "createdAt": Timestamp(date: Date())]) { error in
-        if let error = error {
-            print("Error adding document: \(error)")
-        } else {
-            print("Document added successfully!")
-        }
-    }
-}
-
-func createEvent(eventData: EventCreationModel) {
-    
-    do {
-        try FirestoreManager.shared.db.collection("users").addDocument(from: eventData) { error in
-            if let error = error {
-                print("Error adding document: \(error)")
-            } else {
-                print("Document added successfully!")
-            }
-        }
-    } catch let error {
-        print("Error writing to document")
-    }
-}
 
 struct ImagePicker: UIViewControllerRepresentable {
     @Binding var selectedImage: UIImage?

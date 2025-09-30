@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct EventCard: View {
     @Binding var eventModel: EventModel
     @Binding var showEvent: Bool
@@ -46,7 +47,7 @@ struct EventCard: View {
                 Text("\(eventModel.title)")
                     .font(.headline)
                 //Text("\(eventModel.host)")
-                Text("\(eventModel.skillLevel) \(eventModel.sport)")
+                Text("\(eventModel.skillLevel.rawValue) \(eventModel.sport)")
                     .font(.caption)
                     .foregroundColor(.cherryRed)
                 Divider()
