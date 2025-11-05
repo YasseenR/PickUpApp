@@ -46,10 +46,11 @@ struct EventCard: View {
             VStack(alignment: .leading, spacing: 6) {
                 Text("\(eventModel.title)")
                     .font(.headline)
+                    .foregroundStyle(.textPrimary)
                 //Text("\(eventModel.host)")
                 Text("\(eventModel.skillLevel.rawValue) \(eventModel.sport)")
                     .font(.caption)
-                    .foregroundColor(.cherryRed)
+                    .foregroundColor(.textSecondary)
                 Divider()
                     .overlay(Color.divider)
                 HStack {
