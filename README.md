@@ -2,18 +2,17 @@
 
 An iOS app built with SwiftUI and Firebase that helps players find, join, and host local university pickup games. Inspired by apps like Plei and OpenSport, this MVP is designed for volleyball however I have plans to expand into other activities like dance sessions or pickup sports.
 
-✨ Features
+✨ _Features_
 
 
-🔐 University SSO authentication
 
-📍 Location-based game discovery (only see nearby events)
+📍 Campus-based game discovery (WORK IN PROGRESS)
 
-📝 Host games (with verification to prevent spam)
+📝 Host games
 
 👥 Join or waitlist for games
 
-💬 In-app chat for joined game participants
+💬 In-app chat for joined game participants (WORK IN PROGRESS)
 
 🔔 Push notifications for reminders and chat updates
 
@@ -21,9 +20,10 @@ An iOS app built with SwiftUI and Firebase that helps players find, join, and ho
 
 ⭐ Rate hosts after games
 
-🎨 Dark mode UI with a clean volleyball-inspired palette (black, red, green accents)
 
-🛠️ Tech Stack
+
+
+🛠️ _Tech Stack_
 
 
 Frontend: Swift, SwiftUI, Combine
