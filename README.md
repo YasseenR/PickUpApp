@@ -1,6 +1,6 @@
 🏐 UniPlays
 
-An iOS app built with SwiftUI and Firebase that helps players find, join, and host local university pickup games — supporting Indoor and Outdoor sports. Inspired by apps like Plei and OpenSport, this MVP is designed for volleyball but built with scalability to expand into other activities like dance sessions or pickup sports.
+An iOS app built with SwiftUI and Firebase that helps players find, join, and host local university pickup games. Inspired by apps like Plei and OpenSport, this MVP is designed for volleyball however I have plans to expand into other activities like dance sessions or pickup sports.
 
 ✨ Features
 
